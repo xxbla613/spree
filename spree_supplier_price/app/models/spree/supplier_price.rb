@@ -20,8 +20,11 @@ module Spree
     end
     private
     def variant_belongs_to_seller
-      return unless seller && variant
-      errors.add(:variant, 'must belong to the seller') unless variant.seller_id == seller.id
+    return unless seller && variant
+
+    unless variant.resolved_seller_id == seller.id
+      errors.add(:variant, 'must belong to the seller')
     end
+end
   end
 end
